@@ -38,7 +38,7 @@ class InfoFragment : Fragment() {
             adapter = factAdapter
         }
 
-        val context: Context = view.context // брал this контекст выдавало ошибку. Надо брать с view
+//        val context: Context = view.context // брал this контекст выдавало ошибку. Надо брать с view
 //        val sp = context.getSharedPreferences("facts", Context.MODE_PRIVATE)
         val sp = activity?.getPreferences(Context.MODE_PRIVATE)
 
@@ -57,9 +57,6 @@ class InfoFragment : Fragment() {
                         for (i in 0..99) {
                             editor?.putString(i.toString(), list[i].text.toString())
                         }
-//                        response.body()!!.forEachIndexed { index, factOfCat ->
-//                            editor?.putString(index.toString(), factOfCat.text)
-//                        }
                         editor?.apply()
                     } else {
                         Toast.makeText(view.context, "Что то пошло не так", Toast.LENGTH_SHORT)
@@ -75,14 +72,11 @@ class InfoFragment : Fragment() {
                 }
             })
         } else {
-
+            list.clear()
             for (i in 0..99){
-                list.clear()
-                list[i].text = sp?.getString(i.toString(), "ERROR")
+                list.add(FactOfCat(sp?.getString(i.toString(), "ERROR")))
             }
-//            sp?.all?.forEach { (index, fact) ->
-//                list[index.toInt()].text = fact.toString()
-//            }
+            factAdapter.update(list)
         }
     }
 }
