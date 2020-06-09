@@ -1,19 +1,21 @@
 package com.example.androidkotlintaskc.adapterFacts
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidkotlintaskc.R
 import com.example.androidkotlintaskc.network.model.FactOfCat
+import kotlinx.android.synthetic.main.item.view.*
 
 class FactAdapter(): RecyclerView.Adapter<FactAdapter.FactHolder>() {
 
     private val list = mutableListOf<FactOfCat>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return FactHolder(inflater, parent)
+//        val inflater = LayoutInflater.from(parent.context)
+        return FactHolder(LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -32,14 +34,9 @@ class FactAdapter(): RecyclerView.Adapter<FactAdapter.FactHolder>() {
     }
 
 
-    class FactHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.item, parent, false)) {
-        private var mText: TextView? = null
-        init {
-            mText = itemView.findViewById(R.id.text_of_fact)
-        }
+    class FactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(fact: FactOfCat){
-            mText?.text = fact.text
+            itemView.text_of_fact.text = fact.text
         }
     }
 }
